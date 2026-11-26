@@ -2,11 +2,11 @@ const express = require('express');
 const sql = require('mssql');
 
 const dbConfig = {
-  server: 'localhost',
+  server: process.env.DB_SERVER,
+  database: process.env.DB_NAME,
   port: 1433,
-  database: 'NPBookstore',
-  user: 'npbookstore_user',
-  password: '546336', // move this into .env before you commit (Lab 4)
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   options: { trustServerCertificate: true },
 };
 
