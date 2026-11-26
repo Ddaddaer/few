@@ -1,53 +1,32 @@
 const express = require('express');
 const sql = require('mssql');
+
 const dbConfig = {
   server: 'localhost',
   port: 1433,
   database: 'NPBookstore',
   user: 'npbookstore_user',
-  password: '546336',
+  password: '546336', // move this into .env before you commit (Lab 4)
   options: { trustServerCertificate: true },
 };
+
 const app = express();
 app.use(express.json());
 
-
-
 app.get('/', (req, res) => {
-    res.send("Welcome to the Book Category API");
+  res.send('Welcome to the Book Category API');
 });
 
 app.get('/categories', (req, res) => {
-    res.json([
+  res.json([
     { id: 1, name: 'Fiction' },
     { id: 2, name: 'Non-Fiction' },
-    { id: 3, name: 'Biography' }
-    ]);
+    { id: 3, name: 'Biography' },
+  ]);
 });
 
 app.get('/about', (req, res) => {
-    res.send("My name is Darius. I have waited four month for a single unit in a video game to release. I am somehow patient.");
-
-});
-
-
-app.get('/db-test', async (req, res) => {
-  try {
-    const pool = await sql.connect({
-      server: 'localhost',
-      port: 1433,
-      database: 'NPBookstore',
-      user: 'npbookstore_user',
-      password: '546336',
-      options: { trustServerCertificate: true },
-    });
-    const result = await pool.request()
-      .query('SELECT COUNT(*) AS Total FROM Author');
-    await pool.close();
-    res.json({ connected: true, authors: result.recordset[0].Total });
-  } catch (err) {
-    res.status(500).json({ connected: false, error: err.message });
-  }
+  res.send('My name is Darius. I have waited four month for a single unit in a video game to release. I am somehow patient.');
 });
 
 // GET all authors
@@ -160,7 +139,6 @@ app.delete('/authors/:id', async (req, res) => {
   }
 });
 
-
 app.listen(3000, () => {
-console.log('Listening on port 3000');
+  console.log('Listening on port 3000');
 });
